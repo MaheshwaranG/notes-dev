@@ -2,7 +2,7 @@ const express = require("express");
 var app = express();
 const mongoose = require("mongoose");
 const keys = require("./config/keys");
-
+ 
 mongoose.connect(keys.mongoURI);
 const cookieSession = require("cookie-session");
 const passport = require("passport");
@@ -12,7 +12,7 @@ app.use(
     maxAge: 30 * 24 * 60 * 60 * 1000,
     keys: [keys.cookieKey]
   })
-);
+); 
 
 app.use(passport.initialize());
 app.use(passport.session());
