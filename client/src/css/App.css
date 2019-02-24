@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+}
+
+.app-login-area {
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  background-color: #ff00ff;
+  height: 10%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  -moz-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+}
+.app-login-title-area {
+  position: relative;
+  margin-top: 10%;
+}
+
+.mg-padding-left {
+  padding-left: 10px !important;
+}
