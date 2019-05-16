@@ -3,16 +3,18 @@ import { Router, Route, Switch } from "react-router-dom";
 import createHistory from "history/createBrowserHistory";
 import { connect } from "react-redux";
 import * as actions from "../actions/auth/authActions";
-import PublicRouter from "./PublicRoute";
-import PrivateRouter from "./PrivateRoute";
 import Header from "../components/headers/Header";
 import DefaultPage from "../components/contents/DefaultPage";
 import Dashboard from "../components/contents/Dashboard";
 import SurveyNew from "../components/contents/SurveyNew";
+import PrivateRoute from "./PrivateRoute";
 
 export const history = createHistory();
 
-class AppRouter extends Component {
+class SampleRoute extends Component {
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
     this.props.fetchUser();
   }
@@ -20,17 +22,15 @@ class AppRouter extends Component {
     return (
       <Router history={history}>
         <div>
+          <Header />
           <Switch>
-            <PublicRouter exact={true} path="/" component={DefaultPage} />
-            <PrivateRouter
+            <Route exact={true} path="/" component={DefaultPage} />
+            {/* <Route exact={true} path="/Dashboard" component={Dashboard} />
+            <Route exact={true} path="/surveys/new" component={SurveyNew} /> */}
+            <PrivateRoute
               exact={true}
               path="/Dashboard"
               component={Dashboard}
-            />
-            <PrivateRouter
-              exact={true}
-              path="/surveys/new"
-              component={SurveyNew}
             />
           </Switch>
         </div>
@@ -43,7 +43,11 @@ const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(actions.fetchUser())
 });
 
+const mapStateToProps = state => ({
+  isUserLogin: state.auth.isUserLogin
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(AppRouter);
+)(SampleRoute);
