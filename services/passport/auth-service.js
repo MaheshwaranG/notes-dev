@@ -6,11 +6,11 @@ const mongoose = require("mongoose");
 const User = mongoose.model("user-account");
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user.googleId);
 });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => {
+passport.deserializeUser((googleId, done) => {
+  User.findOne({ googleId }).then(user => {
     done(null, user);
   });
 });
@@ -23,21 +23,33 @@ passport.use(
       callbackURL: "/auth/google/callback",
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
-      User.findOne({ googleId: profile.id }).then(user => {
-        if (user) {
-          done(null, user);
-        } else {
-          new User({
-            googleId: profile.id,
-            username: profile.displayName
-          })
-            .save()
-            .then(user => {
-              done(null, user);
-            });
-        }
-      });
+    async (accessToken, refreshToken, profile, done) => {
+      // console.log(JSON.stringify(profile) + "\n===\n");
+      // console.log(profile._raw);
+      let googlePlus = JSON.parse(profile._raw);
+      // console.log(profile.id);
+      const user = await User.findOne({ googleId: profile.id });
+      // console.log(profile._raw);
+      if (user) {
+        return done(null, user);
+      }
+      const newUser = await new User({
+        _id: new mongoose.Types.ObjectId(),
+        googleId: profile.id,
+        displayName: profile.displayName,
+        name: profile.name,
+        email: profile.emails[0].value,
+        emails: profile.emails,
+        photos: profile.photos,
+        gender: profile.gender,
+        skills: googlePlus.skills,
+        tagline: googlePlus.tagline,
+        googleplusurl: googlePlus.url,
+        organizations: googlePlus.organizations,
+        placeslived: googlePlus.placesLived,
+        provider: "google"
+      }).save();
+      done(null, newUser);
     }
   )
 );
