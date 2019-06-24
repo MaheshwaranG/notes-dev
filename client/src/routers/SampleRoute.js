@@ -7,33 +7,52 @@ import Header from "../components/headers/Header";
 import DefaultPage from "../components/contents/DefaultPage";
 import Dashboard from "../components/contents/Dashboard";
 import SurveyNew from "../components/contents/SurveyNew";
+import Loaders from "../components/Loading/GifLoading";
 import PrivateRoute from "./PrivateRoute";
+import { PublicRoute } from "./PublicRoute";
 
 export const history = createHistory();
 
 class SampleRoute extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isValidated: false
+    };
   }
-  componentDidMount() {
-    this.props.fetchUser();
+  componentWillMount() {
+    this.props.fetchUser().then(data => {
+      this.setState({ isValidated: true });
+    });
   }
   render() {
     return (
       <Router history={history}>
-        <div>
-          <Header />
-          <Switch>
-            <Route exact={true} path="/" component={DefaultPage} />
-            {/* <Route exact={true} path="/Dashboard" component={Dashboard} />
+        {this.state.isValidated ? (
+          <div>
+            <Header />
+            <Switch>
+              {/* <Route exact={true} path="/" component={DefaultPage} /> */}
+              {/* <Route exact={true} path="/Dashboard" component={Dashboard} />
             <Route exact={true} path="/surveys/new" component={SurveyNew} /> */}
-            <PrivateRoute
-              exact={true}
-              path="/Dashboard"
-              component={Dashboard}
-            />
-          </Switch>
-        </div>
+              <PublicRoute exact={true} path="/" component={DefaultPage} />
+              <PrivateRoute
+                exact={true}
+                path="/Dashboard"
+                component={Dashboard}
+              />
+              <PrivateRoute
+                exact={true}
+                path="/surveys/new"
+                component={SurveyNew}
+              />
+            </Switch>
+          </div>
+        ) : (
+          <div>
+            <Route exact={true} path="/" component={Loaders} />
+          </div>
+        )}
       </Router>
     );
   }

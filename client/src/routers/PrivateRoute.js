@@ -31,8 +31,8 @@ export const PrivateRoute = ({
   component: Component,
   ...rest
 }) => {
-  console.log("Private Route === " + JSON.stringify({ ...rest }));
-  console.log("Private Route Is user Login " + isUserLogin);
+  // console.log("Private Route === " + JSON.stringify({ ...rest }));
+  // console.log("Private Route Is user Login " + isUserLogin);
   return (
     <Route
       {...rest}

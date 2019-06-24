@@ -15,7 +15,6 @@ export const fetchUser = () => async dispatch => {
 export const userLogout = () => {
   return function(dispatch) {
     axios.get("/api/logout").then(res => {
-      console.log(JSON.stringify(res));
       if (res.data.status && res.data.status === "logout") {
         dispatch({ type: Constants.actions.USER_LOGOUT });
       }

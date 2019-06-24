@@ -20,3 +20,29 @@
 .mg-padding-left {
   padding-left: 10px !important;
 }
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.nav-header-right-img {
+  margin: 8px 16px 4px 0;
+  display: flex;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.mg-popup {
+  display: none;
+  height: 120px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.16);
+  width: 186px;
+  z-index: 1200;
+  position: fixed;
+  bottom: 0;
+  /* border: 3px solid #f1f1f1; */
+  background: #ffffff;
+}

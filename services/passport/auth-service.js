@@ -27,9 +27,9 @@ passport.use(
       // console.log(JSON.stringify(profile) + "\n===\n");
       // console.log(profile._raw);
       let googlePlus = JSON.parse(profile._raw);
-      console.log(profile.id);
+      // console.log(profile.id);
       const user = await User.findOne({ googleId: profile.id });
-      console.log(profile._raw);
+      // console.log(profile._raw);
       if (user) {
         return done(null, user);
       }

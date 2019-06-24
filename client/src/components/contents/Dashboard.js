@@ -1,6 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../actions/auth/authActions";
 
 class Dashboard extends Component {
+  componentDidMount() {
+    console.log(JSON.stringify(this.props.user));
+  }
   render() {
     return (
       <div style={{ textAlign: "center" }}>
@@ -11,4 +16,15 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapDispatchToProps = dispatch => ({});
+
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard);

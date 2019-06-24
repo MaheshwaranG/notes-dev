@@ -4,7 +4,6 @@ let initialState = {
   user: null
 };
 export default (state = initialState, action) => {
-  console.log("Start Point \n" + action);
   switch (action.type) {
     case Constants.actions.FETCH_USER:
       return {
@@ -12,7 +11,6 @@ export default (state = initialState, action) => {
         user: action.payload
       };
     case Constants.actions.USER_LOGOUT:
-      console.log(action);
       return {
         isUserLogin: false,
         user: {}
