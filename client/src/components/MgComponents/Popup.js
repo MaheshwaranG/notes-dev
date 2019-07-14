@@ -51,16 +51,30 @@ class Popup extends Component {
     }
   };
 
-  popupWindowClick = () => {
+  forEachComponent = (parentNode) => {
+    if (parentNode && parentNode.id === this.props.id) {
+      return false;
+    } else if (parentNode) {
+      return this.forEachComponent(parentNode.parentNode);
+    }
+    else {
+      return true;
+    }
+  }
+  popupWindowClick = event => {
     let popup = document.getElementById(this.props.id);
-
-    console.log("popup  click");
-    popup.style.display = "none";
-    this.setState({ isOpen: false, isStateChanged: true });
-    document.removeEventListener("click", this.popupWindowClick);
+    if (event.target.id !== this.props.id) {
+      if (this.forEachComponent(event.target.parentNode)) {
+        if (popup) {
+          popup.style.display = "none";
+          this.setState({ isOpen: false, isStateChanged: true });
+          document.removeEventListener("click", this.popupWindowClick);
+        }
+      }
+    }
   };
 
-  onClickComponent = event => {};
+  onClickComponent = event => { };
   render() {
     return (
       <div
@@ -69,7 +83,9 @@ class Popup extends Component {
         style={{ top: 10 }}
         onClick={event => this.onClickComponent}
       >
-        <div>{this.props.children}</div>
+        <div className="mg-popup-content" id={`${this.props.id}-content}`}>
+          <ul id={`${this.props.id}-content-li`} className="mg-popup-content-ul">{this.props.children}</ul>
+        </div>
       </div>
     );
   }

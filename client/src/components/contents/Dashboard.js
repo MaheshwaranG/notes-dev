@@ -4,7 +4,6 @@ import * as actions from "../../actions/auth/authActions";
 
 class Dashboard extends Component {
   componentDidMount() {
-    console.log(JSON.stringify(this.props.user));
   }
   render() {
     return (

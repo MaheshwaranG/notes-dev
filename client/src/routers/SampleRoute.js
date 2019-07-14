@@ -17,13 +17,19 @@ class SampleRoute extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isValidated: false
+      isValidated: false,
+      isUserLogin: false
     };
   }
   componentWillMount() {
     this.props.fetchUser().then(data => {
       this.setState({ isValidated: true });
     });
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.isUserLogin !== nextProps.isUserLogin) {
+      this.setState({ isUserLogin: nextProps.isUserLogin });
+    }
   }
   render() {
     return (
@@ -35,7 +41,12 @@ class SampleRoute extends Component {
               {/* <Route exact={true} path="/" component={DefaultPage} /> */}
               {/* <Route exact={true} path="/Dashboard" component={Dashboard} />
             <Route exact={true} path="/surveys/new" component={SurveyNew} /> */}
-              <PublicRoute exact={true} path="/" component={DefaultPage} />
+              <PublicRoute
+                exact={true}
+                isUserLogin={this.state.isUserLogin}
+                path="/"
+                component={DefaultPage}
+              />
               <PrivateRoute
                 exact={true}
                 path="/Dashboard"

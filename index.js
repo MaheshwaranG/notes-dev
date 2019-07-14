@@ -19,16 +19,28 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(client));
+const checkUserLogin = (req, res, next) => {
+  // console.log("in check")
+  if (req.isAuthenticated()) {
+    // console.log("in checked done")
+    next();
+  }
+  else {
+    // console.log("NOT done")
+    res.json({ status: "logout" });
+  }
+}
 
-require("./routes/auth-routes")(app);
+require("./routes/auth-routes")(app, checkUserLogin);
 require("./models/user-models/user-account-model");
 require("./services/passport/auth-service");
 
 // app.get("/", (req, res) => {
 //   res.send({ welcome: "welcome to passport login" });
 // });
+
+
 app.get("/", (req, res) => {
-  console.log("dir name is : " + __dirname + "  " + client);
   res.sendFile(path.join(client + "/index.html"));
 });
 

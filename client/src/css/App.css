@@ -37,12 +37,31 @@
 
 .mg-popup {
   display: none;
-  height: 120px;
+  height: auto;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.16);
   width: 186px;
   z-index: 1200;
   position: fixed;
-  bottom: 0;
+  /* bottom: 0; */
   /* border: 3px solid #f1f1f1; */
   background: #ffffff;
+  color: black !important;
+}
+
+.mg-popup-content-ul > *{
+  width: 100%;
+  background-color: #fff;
+  text-align: center;
+  color: black !important;
+}
+
+.mg-popup-content-ul > *{
+  width: 100%;
+  background-color: #fff;
+  text-align: center;
+  color: black !important;
+}
+
+.mg-popup-content > * :hover {
+  background-color: #e8e3e3a1;
 }

@@ -28,6 +28,11 @@ class Header extends Component {
     return { isUserLogin: nextProps.auth.isUserLogin };
   }
 
+  userLogoutActions = () => {
+    // alert("df");
+    this.props.logout();
+  }
+
   renderContent() {
     switch (this.state.isUserLogin) {
       case null:
@@ -65,7 +70,7 @@ class Header extends Component {
                 targetId="nave-user-profile"
                 isOpen={this.state.isHeaderPopupOpen}
               >
-                ggfffhhh
+                <li onClick={this.userLogoutActions}>Log out </li>
               </Popup>
               {/* <a>Log out</a> */}
             </span>
